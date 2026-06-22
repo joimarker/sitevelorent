@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>VeloRent Brno — Прокат електровелосипедів</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a08;
+  --bg2:#111110;
+  --bg3:#1a1a18;
+  --border:#2a2a28;
+  --text:#f0ede8;
+  --muted:#888780;
+  --accent:#1D9E75;
+  --accent2:#5DCAA5;
+  --radius:12px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+
+nav{position:sticky;top:0;z-index:100;background:rgba(10,10,8,0.85);backdrop-filter:blur(12px);border-bottom:0.5px solid var(--border);padding:0 2rem}
+.nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px}
+.logo{display:flex;align-items:center;gap:8px;text-decoration:none}
+.logo-dot{width:8px;height:8px;border-radius:50%;background:var(--accent)}
+.logo-text{font-size:15px;font-weight:500;color:var(--text);letter-spacing:0.02em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:14px;transition:color 0.2s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{padding:8px 18px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:14px;font-weight:500;cursor:pointer;font-family:inherit;transition:background 0.2s}
+.nav-cta:hover{background:#0F6E56}
+
+.hero{min-height:90vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:4rem 2rem;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;pointer-events:none}
+.hero-ring{position:absolute;border-radius:50%;border:0.5px solid rgba(29,158,117,0.15)}
+.hero-ring:nth-child(1){width:400px;height:400px;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse 4s ease-in-out infinite}
+.hero-ring:nth-child(2){width:650px;height:650px;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse 4s ease-in-out infinite 0.5s}
+.hero-ring:nth-child(3){width:900px;height:900px;top:50%;left:50%;transform:translate(-50%,-50%);animation:pulse 4s ease-in-out infinite 1s}
+@keyframes pulse{0%,100%{opacity:0.3;transform:translate(-50%,-50%) scale(1)}50%{opacity:0.8;transform:translate(-50%,-50%) scale(1.03)}}
+
+.hero-badge{display:inline-flex;align-items:center;gap:6px;padding:6px 14px;border:0.5px solid rgba(29,158,117,0.4);border-radius:100px;font-size:12px;color:var(--accent2);margin-bottom:1.5rem;animation:fadeUp 0.6s ease both}
+.badge-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+.hero h1{font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.1;margin-bottom:1.25rem;animation:fadeUp 0.6s ease 0.1s both}
+.hero h1 span{color:var(--accent);font-weight:500}
+.hero p{font-size:clamp(1rem,2vw,1.15rem);color:var(--muted);max-width:520px;margin-bottom:2.5rem;animation:fadeUp 0.6s ease 0.2s both}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp 0.6s ease 0.3s both}
+.btn-primary{padding:14px 32px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;transition:background 0.2s,transform 0.1s}
+.btn-primary:hover{background:#0F6E56}
+.btn-primary:active{transform:scale(0.98)}
+.btn-ghost{padding:14px 32px;background:transparent;color:var(--text);border:0.5px solid var(--border);border-radius:var(--radius);font-size:15px;cursor:pointer;font-family:inherit;transition:border-color 0.2s,background 0.2s}
+.btn-ghost:hover{border-color:var(--accent);background:rgba(29,158,117,0.06)}
+
+.stats-row{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;max-width:600px;margin:3rem auto 0;width:100%;animation:fadeUp 0.6s ease 0.4s both}
+.stat{background:var(--bg2);padding:1.25rem;text-align:center}
+.stat-num{font-size:1.75rem;font-weight:500;color:var(--accent)}
+.stat-label{font-size:12px;color:var(--muted);margin-top:2px}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+section{padding:5rem 2rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:11px;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:0.75rem}
+.section-title{font-size:clamp(1.6rem,3vw,2.4rem);font-weight:300;line-height:1.2;margin-bottom:1rem}
+.section-title span{color:var(--accent)}
+.section-sub{font-size:15px;color:var(--muted);max-width:480px}
+
+.bikes-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;margin-top:3rem}
+.bike-card{background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:border-color 0.2s,transform 0.2s;cursor:pointer}
+.bike-card:hover{border-color:var(--accent);transform:translateY(-3px)}
+.bike-img{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;position:relative}
+.bike-svg{width:120px;height:80px}
+.bike-badge{position:absolute;top:12px;right:12px;padding:4px 10px;border-radius:100px;font-size:11px;font-weight:500}
+.badge-available{background:rgba(29,158,117,0.15);color:var(--accent2)}
+.badge-busy{background:rgba(217,119,6,0.15);color:#FBBF24}
+.bike-info{padding:1.25rem}
+.bike-name{font-size:15px;font-weight:500;margin-bottom:4px}
+.bike-spec{font-size:13px;color:var(--muted);margin-bottom:1rem}
+.bike-footer{display:flex;align-items:center;justify-content:space-between}
+.bike-price{font-size:18px;font-weight:500;color:var(--accent)}
+.bike-price span{font-size:12px;color:var(--muted);font-weight:400}
+.bike-btn{padding:7px 16px;background:transparent;border:0.5px solid var(--border);border-radius:8px;font-size:13px;color:var(--text);cursor:pointer;font-family:inherit;transition:all 0.2s}
+.bike-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin-top:3rem}
+.feature{padding:1.5rem;background:var(--bg2);border:0.5px solid var(--border);border-radius:var(--radius)}
+.feature-icon{width:36px;height:36px;border-radius:8px;background:rgba(29,158,117,0.12);display:flex;align-items:center;justify-content:center;margin-bottom:1rem}
+.feature-icon svg{width:18px;height:18px;stroke:var(--accent);fill:none;stroke-width:1.5}
+.feature h3{font-size:14px;font-weight:500;margin-bottom:6px}
+.feature p{font-size:13px;color:var(--muted);line-height:1.5}
+
+.how-steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:3rem;counter-reset:steps}
+.step{position:relative}
+.step-num{font-size:11px;font-weight:600;letter-spacing:0.08em;color:var(--accent);margin-bottom:0.5rem}
+.step h3{font-size:15px;font-weight:500;margin-bottom:6px}
+.step p{font-size:13px;color:var(--muted);line-height:1.5}
+.step-line{position:absolute;top:8px;right:-0.75rem;width:1.5rem;height:0.5px;background:var(--border)}
+
+.form-section{background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)}
+.form-wrap{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start}
+.form-left h2{font-size:clamp(1.5rem,2.5vw,2rem);font-weight:300;margin-bottom:1rem}
+.form-left p{font-size:14px;color:var(--muted);margin-bottom:2rem;line-height:1.6}
+.trust-items{display:flex;flex-direction:column;gap:0.75rem}
+.trust-item{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--muted)}
+.trust-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0}
+
+.form-right{background:var(--bg3);border:0.5px solid var(--border);border-radius:var(--radius);padding:2rem}
+.f-group{margin-bottom:1.25rem}
+.f-label{display:block;font-size:11px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.f-input{width:100%;padding:10px 14px;font-size:14px;border:0.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);outline:none;transition:border-color 0.2s;font-family:inherit}
+.f-input:focus{border-color:var(--accent);box-shadow:0 0 0 3px rgba(29,158,117,0.1)}
+.f-input::placeholder{color:#444441}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.f-select{width:100%;padding:10px 14px;font-size:14px;border:0.5px solid var(--border);border-radius:8px;background:var(--bg2);color:var(--text);outline:none;font-family:inherit;cursor:pointer}
+.f-select:focus{border-color:var(--accent)}
+.f-btn{width:100%;padding:13px;background:var(--accent);color:#fff;border:none;border-radius:8px;font-size:15px;font-weight:500;cursor:pointer;font-family:inherit;margin-top:0.5rem;transition:background 0.2s}
+.f-btn:hover{background:#0F6E56}
+.f-btn:disabled{background:var(--border);cursor:not-allowed}
+
+.success-msg{display:none;text-align:center;padding:2rem}
+.s-circle{width:52px;height:52px;border-radius:50%;background:rgba(29,158,117,0.15);display:flex;align-items:center;justify-content:center;margin:0 auto 1rem}
+.s-circle svg{width:24px;height:24px;stroke:var(--accent);fill:none;stroke-width:2}
+.success-msg h3{font-size:18px;font-weight:500;margin-bottom:8px}
+.success-msg p{font-size:14px;color:var(--muted)}
+
+footer{padding:2rem;border-top:0.5px solid var(--border);text-align:center}
+.footer-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem}
+.footer-text{font-size:13px;color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(24px);transition:opacity 0.6s ease,transform 0.6s ease}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  .form-wrap{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .f-row{grid-template-columns:1fr}
+  .step-line{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a class="logo" href="#">
+      <div class="logo-dot"></div>
+      <span class="logo-text">VeloRent</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#bikes">Велосипеди</a></li>
+      <li><a href="#how">Як це працює</a></li>
+      <li><a href="#book">Забронювати</a></li>
+    </ul>
+    <button class="nav-cta" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Орендувати</button>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+    <div class="hero-ring"></div>
+  </div>
+  <div class="hero-badge">
+    <span class="badge-dot"></span>
+    Brno — центр міста
+  </div>
+  <h1>Орендуй <span>електровелосипед</span><br/>і досліджуй Брно</h1>
+  <p>4 DUOTTS C29 е-байки готові до поїздки. Без черг, без депозиту — просто заповни форму і поїхали.</p>
+  <div class="hero-btns">
+    <button class="btn-primary" onclick="document.getElementById('book').scrollIntoView({behavior:'smooth'})">Забронювати зараз</button>
+    <button class="btn-ghost" onclick="document.getElementById('bikes').scrollIntoView({behavior:'smooth'})">Переглянути байки</button>
+  </div>
+  <div class="stats-row">
+    <div class="stat"><div class="stat-num">4</div><div class="stat-label">Електробайки</div></div>
+    <div class="stat"><div class="stat-num">70км</div><div class="stat-label">Запас ходу</div></div>
+    <div class="stat"><div class="stat-num">25–60км/г</div><div class="stat-label">Макс. швидкість</div></div>
+  </div>
+</section>
+
+<section id="bikes">
+  <div class="section-inner reveal">
+    <div class="section-label">Наш флот</div>
+    <h2 class="section-title">Вибери свій <span>байк</span></h2>
+    <p class="section-sub">Всі велосипеди обладнані GPS-трекером, є замок і інструкція.</p>
+    <div class="bikes-grid">
+      <div class="bike-card">
+        <div class="bike-img">
+          <svg class="bike-svg" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="25" cy="55" r="18" stroke="#1D9E75" stroke-width="1.5"/>
+            <circle cx="95" cy="55" r="18" stroke="#1D9E75" stroke-width="1.5"/>
+            <circle cx="25" cy="55" r="4" fill="#1D9E75" opacity="0.4"/>
+            <circle cx="95" cy="55" r="4" fill="#1D9E75" opacity="0.4"/>
+            <path d="M25 55 L50 25 L70 25 L95 55" stroke="#5DCAA5" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M50 25 L55 55" stroke="#5DCAA5" stroke-width="1.5"/>
+            <path d="M65 20 L75 20" stroke="#888780" stroke-width="2" stroke-linecap="round"/>
+            <rect x="48" y="28" width="14" height="8" rx="2" fill="#1D9E75" opacity="0.6"/>
+          </svg>
+          <span class="bike-badge badge-busy">Зайнятий</span>
+        </div>
+        <div class="bike-info">
+          <div class="bike-name">DUOTTS C29 — №1</div>
+          <div class="bike-spec">29" · 250W · 7-швидкостей · 13Ah</div>
+          <div class="bike-footer">
+            <div class="bike-price">250 Kč <span>/ день</span></div>
+            <button class="bike-btn" style="opacity:0.4;cursor:not-allowed">Зайнятий</button>
+          </div>
+        </div>
+      </div>
+      <div class="bike-card">
+        <div class="bike-img">
+          <svg class="bike-svg" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="25" cy="55" r="18" stroke="#1D9E75" stroke-width="1.5"/>
+            <circle cx="95" cy="55" r="18" stroke="#1D9E75" stroke-width="1.5"/>
+            <circle cx="25" cy="55" r="4" fill="#1D9E75" opacity="0.4"/>
+            <circle cx="95" cy="55" r="4" fill="#1D9E75" opacity="0.4"/>
+            <path d="M25 55 L50 25 L70 25 L95 55" stroke="#5DCAA5" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M50 25 L55 55" stroke="#5DCAA5" stroke-width="1.5"/>
+            <path d="M65 20 L75 20" stroke="#888780" stroke-width="2" stroke-linecap="round"/>
+            <rect x="48" y="28" width="14" height="8" rx="2" fill="#1D9E75" opacity="0.6"/>
+          </svg>
+          <span class="bike-badge badge-busy">Зайнятий</span>
+        </div>
+        <div class="bike-info">
+          <div class="bike-name">DUOTTS C29 — №2</div>
+          <div class="bike-spec">29" · 250W · 7-швидкостей · 13Ah</div>
+          <div class="bike-footer">
+            <div class="bike-price">250 Kč <span>/ день</span></div>
+            <button class="bike-btn" style="opacity:0.4;cursor:not-allowed">Зайнятий</button>
+          </div>
+        </div>
+      </div>
+      <div class="bike-card">
+        <div class="bike-img">
+          <svg class="bike-svg" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="25" cy="55" r="18" stroke="#888780" stroke-width="1.5"/>
+            <circle cx="95" cy="55" r="18" stroke="#888780" stroke-width="1.5"/>
+            <circle cx="25" cy="55" r="4" fill="#888780" opacity="0.4"/>
+            <circle cx="95" cy="55" r="4" fill="#888780" opacity="0.4"/>
+            <path d="M25 55 L50 25 L70 25 L95 55" stroke="#888780" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M50 25 L55 55" stroke="#888780" stroke-width="1.5"/>
+            <path d="M65 20 L75 20" stroke="#888780" stroke-width="2" stroke-linecap="round"/>
+            <rect x="48" y="28" width="14" height="8" rx="2" fill="#888780" opacity="0.6"/>
+          </svg>
+          <span class="bike-badge badge-busy">Зайнятий</span>
+        </div>
+        <div class="bike-info">
+          <div class="bike-name">DUOTTS C29 — №3</div>
+          <div class="bike-spec">29" · 250W · 7-швидкостей · 13Ah</div>
+          <div class="bike-footer">
+            <div class="bike-price">250 Kč <span>/ день</span></div>
+            <button class="bike-btn" style="opacity:0.4;cursor:not-allowed">Зайнятий</button>
+          </div>
+        </div>
+      </div>
+      <div class="bike-card">
+        <div class="bike-img">
+          <svg class="bike-svg" viewBox="0 0 120 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <circle cx="25" cy="55" r="18" stroke="#1D9E75" stroke-width="1.5"/>
+            <circle cx="95" cy="55" r="18" stroke="#1D9E75" stroke-width="1.5"/>
+            <circle cx="25" cy="55" r="4" fill="#1D9E75" opacity="0.4"/>
+            <circle cx="95" cy="55" r="4" fill="#1D9E75" opacity="0.4"/>
+            <path d="M25 55 L50 25 L70 25 L95 55" stroke="#5DCAA5" stroke-width="1.5" stroke-linecap="round"/>
+            <path d="M50 25 L55 55" stroke="#5DCAA5" stroke-width="1.5"/>
+            <path d="M65 20 L75 20" stroke="#888780" stroke-width="2" stroke-linecap="round"/>
+            <rect x="48" y="28" width="14" height="8" rx="2" fill="#1D9E75" opacity="0.6"/>
+          </svg>
+          <span class="bike-badge badge-available">Доступний</span>
+        </div>
+        <div class="bike-info">
+          <div class="bike-name">DUOTTS C29 — №4</div>
+          <div class="bike-spec">29" · 250W · 7-швидкостей · 13Ah</div>
+          <div class="bike-footer">
+            <div class="bike-price">250 Kč <span>/ день</span></div>
+            <button class="bike-btn" onclick="selectBike('DUOTTS C29 №4')">Вибрати</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="how" style="background:var(--bg2);border-top:0.5px solid var(--border);border-bottom:0.5px solid var(--border)">
+  <div class="section-inner reveal">
+    <div class="section-label">Процес</div>
+    <h2 class="section-title">Як це <span>працює</span></h2>
+    <div class="how-steps">
+      <div class="step">
+        <div class="step-num">01</div>
+        <h3>Заповни форму</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">Вибери байк, дату і час. Займе 2 хвилини.</p>
+        <div class="step-line"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">02</div>
+        <h3>Отримай підтвердження</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">На email прийде договір і деталі забору.</p>
+        <div class="step-line"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">03</div>
+        <h3>Забери байк</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">Зустрінемось в центрі Брно в зручний час.</p>
+        <div class="step-line"></div>
+      </div>
+      <div class="step">
+        <div class="step-num">04</div>
+        <h3>Їдь і насолоджуйся</h3>
+        <p style="font-size:13px;color:var(--muted);line-height:1.5">70 км запасу ходу. Швидкість 25–60 км/год.</p>
+      </div>
+    </div>
+    <div class="features-grid" style="margin-top:3rem">
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3>GPS-трекер</h3>
+        <p>Кожен байк обладнаний Apple AirTag — безпека для тебе і для нас.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+        </div>
+        <h3>Без депозиту</h3>
+        <p>Ніяких зайвих платежів наперед. Платиш тільки за оренду.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.22 1.18 2 2 0 012.18 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.91 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+        </div>
+        <h3>Підтримка 24/7</h3>
+        <p>Telegram-бот для зв'язку. Відповідаємо швидко.</p>
+      </div>
+      <div class="feature">
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+        </div>
+        <h3>Центр міста</h3>
+        <p>Нові правила руху в Брно — байк швидше машини в центрі.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="book" class="form-section">
+  <div class="section-inner reveal">
+    <div class="form-wrap">
+      <div class="form-left">
+        <div class="section-label">Бронювання</div>
+        <h2>Готовий їхати?<br/>Заповни форму</h2>
+        <p>Після заповнення на твою пошту прийде договір і підтвердження бронювання.</p>
+        <div class="trust-items">
+          <div class="trust-item"><span class="trust-dot"></span>Договір автоматично на email</div>
+          <div class="trust-item"><span class="trust-dot"></span>Підтвердження протягом хвилини</div>
+          <div class="trust-item"><span class="trust-dot"></span>Скасування безкоштовно за 2 год</div>
+          <div class="trust-item"><span class="trust-dot"></span>Застава — обговорюється особисто</div>
+        </div>
+      </div>
+      <div class="form-right">
+        <div id="booking-form">
+          <div class="f-group">
+            <label class="f-label">Повне ім'я</label>
+            <input class="f-input" type="text" id="b-name" placeholder="Андрій Іванченко"/>
+          </div>
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Email</label>
+              <input class="f-input" type="email" id="b-email" placeholder="you@example.com"/>
+            </div>
+            <div class="f-group">
+              <label class="f-label">Телефон</label>
+              <input class="f-input" type="tel" id="b-phone" placeholder="+420 XXX XXX XXX"/>
+            </div>
+          </div>
+          <div class="f-group">
+            <label class="f-label">Байк</label>
+            <select class="f-select f-input" id="b-bike">
+              <option value="">Вибери байк</option>
+              
+              
+              <option value="DUOTTS C29 №4">DUOTTS C29 №4 — доступний</option>
+            </select>
+          </div>
+          <div class="f-row">
+            <div class="f-group">
+              <label class="f-label">Дата початку</label>
+              <input class="f-input" type="date" id="b-date"/>
+            </div>
+            <div class="f-group">
+              <label class="f-label">Кількість днів</label>
+              <select class="f-select f-input" id="b-days">
+                <option value="1">1 день — 250 Kč</option>
+                <option value="2">2 дні — 450 Kč</option>
+                <option value="3">3 дні — 650 Kč</option>
+                <option value="7">Тиждень — 1750 Kč</option>
+              </select>
+            </div>
+          </div>
+          <button class="f-btn" onclick="submitBooking()">Забронювати та отримати договір</button>
+        </div>
+        <div class="success-msg" id="booking-success">
+          <div class="s-circle">
+            <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+          </div>
+          <h3>Бронювання підтверджено</h3>
+          <p id="b-success-text">Договір надіслано на вашу пошту.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div style="display:flex;align-items:center;gap:8px">
+      <div style="width:6px;height:6px;border-radius:50%;background:var(--accent)"></div>
+      <span style="font-size:13px;font-weight:500;color:var(--text)">VeloRent Brno</span>
+    </div>
+    <span class="footer-text">Brno, Jihomoravský kraj · velorent@brno.cz</span>
+    <span class="footer-text">© 2026</span>
+  </div>
+</footer>
+
+<script>
+function selectBike(name){
+  document.getElementById('b-bike').value=name;
+  document.getElementById('book').scrollIntoView({behavior:'smooth'});
+}
+
+async function submitBooking(){
+  const name=document.getElementById('b-name').value.trim();
+  const email=document.getElementById('b-email').value.trim();
+  const phone=document.getElementById('b-phone').value.trim();
+  const bike=document.getElementById('b-bike').value;
+  const date=document.getElementById('b-date').value;
+  const days=document.getElementById('b-days').value;
+  if(!name||!email||!phone||!bike||!date){alert('Заповніть всі поля');return}
+  const btn=document.querySelector('.f-btn');
+  btn.disabled=true;btn.textContent='Відправляємо...';
+  const WEBHOOK='https://andrii1654.app.n8n.cloud/webhook-test/a6deac46-9118-49c5-8ea3-e6c8ef3c664d';
+  const prices={'1':250,'2':450,'3':650,'7':1750};
+  try{
+    await fetch(WEBHOOK,{method:'POST',headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({name,email,phone,service:bike,price:prices[days]||150,contractNumber:Math.floor(Math.random()*900+100).toString(),date,days})});
+  }catch(e){}
+  document.getElementById('booking-form').style.display='none';
+  document.getElementById('booking-success').style.display='block';
+  document.getElementById('b-success-text').textContent='Договір надіслано на '+email;
+}
+
+const observer=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+
+const today=new Date().toISOString().split('T')[0];
+document.getElementById('b-date').min=today;
+document.getElementById('b-date').value=today;
+</script>
+</body>
+</html>
